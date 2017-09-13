@@ -29,7 +29,8 @@ var TriVertexShader =
 '    float tri_delta = (a_tri_total_2 - a_tri_total_1) * u_alpha + a_tri_total_1;\n' +
 '    bool pbt_crc = a_pbt_crc_1 == 1.0 || a_pbt_crc_2 == 1.0;\n' + 
 '    bool tri_crc = a_tri_crc_1 == 1.0 || a_tri_crc_2 == 1.0;\n' + 
-'    gl_PointSize = clamp(sqrt(pbt_delta + tri_delta), 0.0, 50.0);\n' +
+'    gl_PointSize = clamp(sqrt(pbt_delta/1000. + tri_delta/1000.), 0.0, 50.0);\n' +
+'    gl_PointSize = 200. * smoothstep(0.0, 20000., sqrt(pbt_delta + tri_delta));\n' +
 '}\n';
 
 var TriFragmentShader = 
