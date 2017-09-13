@@ -8,8 +8,8 @@ var gui;
 var timeSlider;
 
 var mapOptions = {
-  zoom: 2,
-  center: new google.maps.LatLng(0.0, 0.0),
+  zoom: 5,
+  center: new google.maps.LatLng(37.0, -96.0),
   styles: mapStyles
 };
 
