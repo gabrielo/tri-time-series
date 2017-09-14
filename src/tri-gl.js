@@ -42,7 +42,7 @@ var TriFragmentShader =
 '#extension GL_OES_standard_derivatives : enable\n' +
 'precision mediump float;\n' +
 'void main() {\n' +
-'    vec4 color = vec4(1.0,0.0,0.0,1.0);\n' +
+'    vec4 color = vec4(205./255.,133./255.,63./255.,1.0);\n' +
 '  float dist = length(gl_PointCoord.xy - vec2(.5,.5));\n' +
 '  dist = 1. - (dist * 2.);\n' +
 '  dist = max(0., dist);\n' +
