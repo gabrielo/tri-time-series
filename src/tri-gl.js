@@ -15,6 +15,7 @@ var TriVertexShader =
 'uniform mat4 u_map_matrix;\n' +
 'uniform float u_epoch;\n' +
 'uniform float u_alpha;\n' +
+'uniform float u_show_tri;\n' +
 'void main() {\n' +
 '    vec4 position;\n' +
 '    if (u_epoch < a_epoch_1) {\n' +
@@ -30,11 +31,7 @@ var TriVertexShader =
 '    bool pbt_crc = a_pbt_crc_1 == 1.0 || a_pbt_crc_2 == 1.0;\n' + 
 '    bool tri_crc = a_tri_crc_1 == 1.0 || a_tri_crc_2 == 1.0;\n' + 
 '    gl_PointSize = clamp(sqrt(pbt_delta/1000. + tri_delta/1000.), 0.0, 50.0);\n' +
-'    float pointSize = 250. * smoothstep(0.0, 5000., sqrt(pbt_delta + tri_delta));\n' +
-'    //if (pointSize > 0.) {\n' +
-'    //  pointSize = pointSize + 10.;\n' +
-'    //}\n' +
-'    //pointSize = 10.*log(sqrt(pbt_delta + tri_delta));\n' +
+'    float pointSize = 250. * smoothstep(0.0, 5000., sqrt(pbt_delta + tri_delta*u_show_tri));\n' +
 '    gl_PointSize = pointSize;\n' +
 '}\n';
 
@@ -58,7 +55,7 @@ var TriGl = function TriGl(gl) {
         'buffer': null,
         'ready': false
     };
-    this.show0Casualties = true;
+    this.showTri = true;
 
 }
 
@@ -111,6 +108,8 @@ TriGl.prototype.draw = function draw(transform, options) {
 
         var alpha = options.alpha;
         gl.uniform1f(program.u_alpha, alpha);
+
+        gl.uniform1f(program.u_show_tri, this.showTri ? 1.0 : 0.0);
 
         gl.drawArrays(gl.POINTS, 0, buffer.count);
         gl.disable(gl.BLEND);

@@ -98,7 +98,7 @@ function init() {
 
 
   gui = new dat.GUI();
-  //gui.add(gtdGl, 'show0Casualties');
+  gui.add(triGl, 'showTri');
 
  }
 
