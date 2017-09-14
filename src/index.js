@@ -70,9 +70,9 @@ function initTimeSlider(opts) {
       return date.getUTCFullYear();
     },
     animationRate: {
-      fast: 10,
-      medium: 20,
-      slow: 40
+      fast: 5,
+      medium: 10,
+      slow: 20
     }
   });  
   return timeSlider;
