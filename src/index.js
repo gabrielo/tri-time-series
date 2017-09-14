@@ -99,6 +99,7 @@ function init() {
 
   gui = new dat.GUI();
   gui.add(triGl, 'showTri');
+  gui.add(triGl, 'showPbt');
 
  }
 
