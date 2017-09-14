@@ -30,7 +30,12 @@ var TriVertexShader =
 '    bool pbt_crc = a_pbt_crc_1 == 1.0 || a_pbt_crc_2 == 1.0;\n' + 
 '    bool tri_crc = a_tri_crc_1 == 1.0 || a_tri_crc_2 == 1.0;\n' + 
 '    gl_PointSize = clamp(sqrt(pbt_delta/1000. + tri_delta/1000.), 0.0, 50.0);\n' +
-'    gl_PointSize = 200. * smoothstep(0.0, 20000., sqrt(pbt_delta + tri_delta));\n' +
+'    float pointSize = 250. * smoothstep(0.0, 5000., sqrt(pbt_delta + tri_delta));\n' +
+'    //if (pointSize > 0.) {\n' +
+'    //  pointSize = pointSize + 10.;\n' +
+'    //}\n' +
+'    //pointSize = 10.*log(sqrt(pbt_delta + tri_delta));\n' +
+'    gl_PointSize = pointSize;\n' +
 '}\n';
 
 var TriFragmentShader = 
@@ -38,7 +43,10 @@ var TriFragmentShader =
 'precision mediump float;\n' +
 'void main() {\n' +
 '    vec4 color = vec4(1.0,0.0,0.0,1.0);\n' +
-'    gl_FragColor = color;\n' + 
+'  float dist = length(gl_PointCoord.xy - vec2(.5,.5));\n' +
+'  dist = 1. - (dist * 2.);\n' +
+'  dist = max(0., dist);\n' +
+'  gl_FragColor = color * dist;\n' +
 '}\n';
 
 var TriGl = function TriGl(gl) {
