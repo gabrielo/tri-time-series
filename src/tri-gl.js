@@ -58,7 +58,7 @@ var TriVertexShader =
 '        v_tri_crc = 0.0;\n' +
 '    }\n' +
 '    gl_PointSize = clamp(sqrt(pbt_delta/1000. + tri_delta/1000.), 0.0, 50.0);\n' +
-'    float pointSize = 250. * smoothstep(0.0, 5000., sqrt(pbt_delta*u_show_pbt + tri_delta*u_show_tri));\n' +
+'    float pointSize = 100. * smoothstep(0.0, 500., sqrt(pbt_delta*u_show_pbt + tri_delta*u_show_tri));\n' +
 '    gl_PointSize = pointSize;\n' +
 '}\n';
 
