@@ -25,5 +25,23 @@
   <body>
     <div id="map-div"></div>
     <div id="time-slider-controls"></div>
+    <div style="background: #ffffff; height: 171px; width: 241px; border: 1px solid black; position: absolute; top:10px; left: 10px">
+      <tr id="health-impact-legend" style="">
+        <td>
+          <div style="font-size: 15px">Toxics Release Inventory<span class="credit"> (EPA)</span></div>
+          <svg class="svg-legend" width="240" height="170">
+            <circle class="gain" r="10" cx="15" cy="10" style="fill: sienna; stroke: #fff;"></circle> 
+            <text x="30" y="15" style="font-size: 12px; fill: #333"> Total Release per site(lbs)</text> 
+            <circle r="25.0" cx="120.0" cy="122.0" vector-effect="non-scaling-stroke" style="fill: none; stroke: #999"></circle>
+            <circle r="40.0" cx="120.0" cy="107.0" vector-effect="non-scaling-stroke" style="fill: none; stroke: #999"></circle>
+            <circle r="50.0" cx="120.0" cy="97.0" vector-effect="non-scaling-stroke" style="fill: none; stroke: #999"></circle>
+            <text text-anchor="middle" x="120.0" y="112.0" dy="13" style="font-size: 10px; fill: #666">25K</text>
+            <text text-anchor="middle" x="120.0" y="77.0" dy="13" style="font-size: 10px; fill: #666">50K</text>
+            <text text-anchor="middle" x="120.0" y="52.0" dy="13" style="font-size: 10px; fill: #666">>100K</text>
+          </svg>
+          </td>
+        </tr>
+      </div>
+
   </body>
 </html>
