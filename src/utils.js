@@ -257,7 +257,8 @@ var mapStyles =
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#c9c9c9"
+        //"color": "#c9c9c9"
+        "color": "#262626"
       }
     ]
   },
