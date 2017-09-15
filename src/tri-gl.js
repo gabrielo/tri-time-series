@@ -17,6 +17,9 @@ var TriVertexShader =
 'uniform float u_alpha;\n' +
 'uniform float u_show_tri;\n' +
 'uniform float u_show_pbt;\n' +
+'uniform bool u_show_crc;\n' +
+'varying float v_pbt_crc;\n' + 
+'varying float v_tri_crc;\n' + 
 'void main() {\n' +
 '    vec4 position;\n' +
 '    if (u_epoch < a_epoch_1) {\n' +
@@ -31,6 +34,29 @@ var TriVertexShader =
 '    float tri_delta = (a_tri_total_2 - a_tri_total_1) * u_alpha + a_tri_total_1;\n' +
 '    bool pbt_crc = a_pbt_crc_1 == 1.0 || a_pbt_crc_2 == 1.0;\n' + 
 '    bool tri_crc = a_tri_crc_1 == 1.0 || a_tri_crc_2 == 1.0;\n' + 
+'    if (u_show_crc) {\n' +
+'      if (pbt_delta * u_show_pbt > 0.) {\n' +
+'         if (pbt_crc) {\n' +
+'           v_pbt_crc = 1.0;\n'+
+'         } else {\n' +
+'           v_pbt_crc = 0.0;\n'+
+'         }\n' +
+'      } else {\n' +
+'        v_pbt_crc = 0.0;\n' +
+'      }\n' +
+'      if (tri_delta * u_show_tri > 0.) {\n' +
+'         if (tri_crc) {\n' +
+'           v_tri_crc = 1.0;\n'+
+'         } else {\n' +
+'           v_tri_crc = 0.0;\n'+
+'         }\n' +
+'      } else {\n' +
+'        v_tri_crc = 0.0;\n' +
+'      }\n' +
+'    } else {\n' +
+'        v_pbt_crc = 0.0;\n' +
+'        v_tri_crc = 0.0;\n' +
+'    }\n' +
 '    gl_PointSize = clamp(sqrt(pbt_delta/1000. + tri_delta/1000.), 0.0, 50.0);\n' +
 '    float pointSize = 250. * smoothstep(0.0, 5000., sqrt(pbt_delta*u_show_pbt + tri_delta*u_show_tri));\n' +
 '    gl_PointSize = pointSize;\n' +
@@ -39,8 +65,13 @@ var TriVertexShader =
 var TriFragmentShader = 
 '#extension GL_OES_standard_derivatives : enable\n' +
 'precision mediump float;\n' +
+'varying float v_pbt_crc;\n' + 
+'varying float v_tri_crc;\n' + 
 'void main() {\n' +
 '    vec4 color = vec4(205./255.,133./255.,63./255.,1.0);\n' +
+'  if (v_pbt_crc == 1.0 || v_tri_crc == 1.0) {\n' +
+'    color = vec4(128./255.,0.,0.,1.);\n' +
+'  }\n' +
 '  float dist = length(gl_PointCoord.xy - vec2(.5,.5));\n' +
 '  dist = 1. - (dist * 2.);\n' +
 '  dist = max(0., dist);\n' +
@@ -58,6 +89,7 @@ var TriGl = function TriGl(gl) {
     };
     this.showTri = true;
     this.showPbt = true;
+    this.highlightCarcinogens = false;
 
 }
 
@@ -113,6 +145,7 @@ TriGl.prototype.draw = function draw(transform, options) {
 
         gl.uniform1f(program.u_show_tri, this.showTri ? 1.0 : 0.0);
         gl.uniform1f(program.u_show_pbt, this.showPbt ? 1.0 : 0.0);
+        gl.uniform1f(program.u_show_crc, this.highlightCarcinogens);
 
         gl.drawArrays(gl.POINTS, 0, buffer.count);
         gl.disable(gl.BLEND);

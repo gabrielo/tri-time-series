@@ -98,8 +98,9 @@ function init() {
 
 
   gui = new dat.GUI();
-  gui.add(triGl, 'showTri');
-  gui.add(triGl, 'showPbt');
+  gui.add(triGl, 'showTri').name('TRI releases only');
+  gui.add(triGl, 'showPbt').name('PBT releases only');
+  gui.add(triGl, 'highlightCarcinogens').name('Carcinogens');
 
  }
 
