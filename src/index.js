@@ -98,11 +98,12 @@ function init() {
   })
 
 
-  gui = new dat.GUI();
+  gui = new dat.GUI({ autoPlace: false });
   gui.add(triGl, 'showTri').name('TRI releases only');
   gui.add(triGl, 'showPbt').name('PBT releases only');
   gui.add(triGl, 'highlightCarcinogens').name('Carcinogens');
-
+  var customContainer = document.getElementById('custom-dat-gui-container');
+  customContainer.appendChild(gui.domElement);
  }
 
 document.addEventListener('DOMContentLoaded', init, false);
