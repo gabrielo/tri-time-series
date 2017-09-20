@@ -88,7 +88,7 @@ var TriGl = function TriGl(gl) {
         'ready': false
     };
     this.showTri = true;
-    this.showPbt = true;
+    this.showPbt = false;
     this.highlightCarcinogens = false;
 
 }
